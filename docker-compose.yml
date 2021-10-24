@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  postgresdb:
+    image: postgres
+  pgadmin:
+    image: dpage/pgadmin4
+  botflow:
+    image: ${DOCKER_REGISTRY-}botflow
+    build:
+      context: .
+      dockerfile: BotFlow/Dockerfile
