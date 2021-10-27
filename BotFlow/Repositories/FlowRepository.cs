@@ -21,6 +21,13 @@ namespace BotFlow.Repositories
             _logger = logger;
         }
 
+        public async Task<Call> AddCall(Call call)
+        {
+            await _context.Calls.AddAsync(call);
+            await _context.SaveChangesAsync();
+            return call;
+        }
+
         public async Task<Incident> AddIncident(Incident incident)
         {
             using (_context)
@@ -37,7 +44,15 @@ namespace BotFlow.Repositories
         public async Task<BotFlowInstance> AddInstance(BotFlowInstance instance)
         {
             await _context.Instances.AddAsync(instance);
+            await _context.SaveChangesAsync();
             return instance;
+        }
+
+        public async Task<PersonCall> AddPersonCall(PersonCall personCall)
+        {
+            await _context.PersonCalls.AddAsync(personCall);
+            await _context.SaveChangesAsync();
+            return personCall;
         }
 
         public async Task<IEnumerable<Stage>> GetAllStages()
@@ -49,13 +64,25 @@ namespace BotFlow.Repositories
             
         }
 
+        public  async Task<IEnumerable<Call>> GetCalls()
+        {
+            var calls = await _context.Calls.ToListAsync();
+            return calls;
+        }
+
         public async Task<Incident> GetIncidentByContact(string contact)
         {
             using (_context)
             {
-                var incident = await _context.Incidents.Where(i => i.Contact == "contact" && i.Status == "Open").FirstOrDefaultAsync();
+                var incident = await _context.Incidents.Where(i => i.Contact == contact && i.Status == "Logged").FirstOrDefaultAsync();
                 return incident;
             }
+        }
+
+        public async Task<Incident> GetIncidentById(Guid id)
+        {
+            var incident = await _context.Incidents.Where(i => i.Id == id).FirstOrDefaultAsync();
+            return incident;
         }
 
         public async Task<IEnumerable<Incident>> GetIncidents()
@@ -74,6 +101,18 @@ namespace BotFlow.Repositories
                 var instance = await _context.Instances.Where(i => i.Contact == contact && i.Active == true).FirstOrDefaultAsync();
                 return instance;
             }
+        }
+
+        public async Task<IEnumerable<Person>> GetPeople()
+        {
+            var people = await _context.People.ToListAsync();
+            return people;
+        }
+
+        public async Task<IEnumerable<PersonCall>> GetPeopleCalls()
+        {
+            var peopleCalls = await _context.PersonCalls.ToListAsync();
+            return peopleCalls;
         }
 
         public async Task<Stage> GetStageById(Guid id)
@@ -108,5 +147,7 @@ namespace BotFlow.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+
     }
 }

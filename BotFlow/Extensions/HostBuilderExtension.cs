@@ -1,4 +1,5 @@
 ﻿using BotFlow.Data;
+using BotFlow.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -59,6 +60,12 @@ namespace BotFlow.Extensions
                 context.SaveChanges();
                 context.StageConfig.AddRange(SeedData.GetStageConfig(context.Stages));
                 context.SaveChanges();
+            }
+
+            if (context.People.ToList().Count == 0)
+            {
+                context.People.Add(new Person { Id = Guid.NewGuid(), Name = "Ben Driver", Mobile = "27843745215", IsOnline = true });
+                context.SaveChanges();  
             }
             
             

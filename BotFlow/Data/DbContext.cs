@@ -14,6 +14,11 @@ namespace BotFlow.Data
         public DbSet<StageConfig> StageConfig { get; set; }
         public DbSet<BotFlowInstance> Instances { get; set; }
         public DbSet<Incident> Incidents { get; set; }
+        public DbSet<Call> Calls { get; set; }
+        public DbSet<Person> People { get; set; }
+        public DbSet<PersonCall> PersonCalls { get; set; }
+        
+
 
         public override void Dispose()
         {

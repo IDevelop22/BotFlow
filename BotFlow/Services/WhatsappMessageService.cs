@@ -24,7 +24,7 @@ namespace BotFlow.Services
             client.BaseAddress = new Uri($"{_config["ChatApi:BaseAddress"]}");
             var smt = new
             {
-                chatId = chatId,
+                chatId = "27843745215@c.us",
                 lat = location.Split(';')[0],
                 lng = location.Split(';')[1],
                 address = addressName
@@ -34,12 +34,12 @@ namespace BotFlow.Services
         }
 
         public async Task SendMessage(string chatId, string message)
-        {
+            {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri($"{_config["ChatApi:BaseAddress"]}");
             SendMessageTemplate smt = new SendMessageTemplate
             {
-                phone = chatId.Split('@')[0],
+                phone = "27843745215",
                 body = message
             };
             var content = new StringContent(JsonSerializer.Serialize(smt), Encoding.UTF8, "application/json");

@@ -51,10 +51,12 @@ namespace BotFlow.Services
                 {
                     Id = Guid.NewGuid(),
                     Contact = contact,
-                    Status = "Open"
+                    Status = "Logged"
                 };
 
                 incident = await _repo.AddIncident(newIncident);
+                await _whatsappMessageService.SendMessage(incident.Contact, currentStage.DisplayMessage);
+                return true;
             }
 
             await HandleNext(currentStage,incident,currentInstance, userResponse);
@@ -68,38 +70,44 @@ namespace BotFlow.Services
             switch (currentStage.Name)
             {
                 case "Welcome":
+                    
+                
+                   
                     instance.CurrentStage = nextStage.NextStage;
                     await _repo.UpdateInstance(instance);
                     await _repo.UpdateIncident(incident);
-                    await _whatsappMessageService.SendMessage(incident.Contact, currentStage.DisplayMessage);
+                    await _whatsappMessageService.SendMessage(incident.Contact, nextStage.NextStage.DisplayMessage);
                     break;
                 case "GetContact":
+                    
                     instance.CurrentStage = nextStage.NextStage;
                     await _repo.UpdateInstance(instance);
                     incident.CallBackNo = response;
                     await _repo.UpdateIncident(incident);
-                    await _whatsappMessageService.SendMessage(incident.Contact, currentStage.DisplayMessage);
+                    await _whatsappMessageService.SendMessage(incident.Contact, nextStage.NextStage.DisplayMessage);
+
                     break;
-                case "GetIncident":
+                case "GetIncidentType":
                     instance.CurrentStage = nextStage.NextStage;
                     await _repo.UpdateInstance(instance);
                     incident.Type = response;
                     await _repo.UpdateIncident(incident);
-                    await _whatsappMessageService.SendMessage(incident.Contact, currentStage.DisplayMessage);
+                     await _whatsappMessageService.SendMessage(incident.Contact, nextStage.NextStage.DisplayMessage);
                     break;
                 case "GetLocation":
                     instance.CurrentStage = nextStage.NextStage;
                     await _repo.UpdateInstance(instance);
                     incident.Location = response;
                     await _repo.UpdateIncident(incident);
-                    await _whatsappMessageService.SendMessage(incident.Contact, currentStage.DisplayMessage);
+                    await _whatsappMessageService.SendMessage(incident.Contact, nextStage.NextStage.DisplayMessage);
                     break;
                 case "Final":
-                    instance.CurrentStage = nextStage.NextStage;
+                    //   instance.CurrentStage = nextStage.NextStage;
+                    instance.Active = false;
                     await _repo.UpdateInstance(instance);
                     incident.Status = "Closed";
                     await _repo.UpdateIncident(incident);
-                    await _whatsappMessageService.SendMessage(incident.Contact, currentStage.DisplayMessage);
+                    await _whatsappMessageService.SendMessage(incident.Contact, nextStage.NextStage.DisplayMessage);
                     break;
             }
             return true;

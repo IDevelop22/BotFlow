@@ -28,7 +28,8 @@ namespace BotFlow.Extensions
                     new StageConfig(){  Id = Guid.NewGuid(),CurrentStageId = stages.Where(s=>s.Name=="Welcome").FirstOrDefault().Id,NextStageId = stages.Where(s=>s.Name=="GetContact").FirstOrDefault().Id},
                     new StageConfig(){  Id = Guid.NewGuid(),CurrentStageId = stages.Where(s=>s.Name=="GetContact").FirstOrDefault().Id,NextStageId = stages.Where(s=>s.Name=="GetIncidentType").FirstOrDefault().Id},
                     new StageConfig(){  Id = Guid.NewGuid(),CurrentStageId = stages.Where(s=>s.Name=="GetIncidentType").FirstOrDefault().Id,NextStageId = stages.Where(s=>s.Name=="GetLocation").FirstOrDefault().Id},
-                    new StageConfig(){  Id = Guid.NewGuid(),CurrentStageId = stages.Where(s=>s.Name=="GetLocation").FirstOrDefault().Id,NextStageId = stages.Where(s=>s.Name=="Final").FirstOrDefault().Id}
+                    new StageConfig(){  Id = Guid.NewGuid(),CurrentStageId = stages.Where(s=>s.Name=="GetLocation").FirstOrDefault().Id,NextStageId = stages.Where(s=>s.Name=="Final").FirstOrDefault().Id},
+                    new StageConfig(){  Id = Guid.NewGuid(),CurrentStageId = stages.Where(s=>s.Name=="Final").FirstOrDefault().Id,NextStageId = stages.Where(s=>s.Name=="Welcome").FirstOrDefault().Id}
                 };
             }
         }

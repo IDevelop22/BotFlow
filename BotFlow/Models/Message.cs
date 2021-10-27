@@ -22,4 +22,5 @@ namespace BotFlow.Models
         public string instanceId { get; set; }
         public List<Message> messages { get; set; }
     }
+
 }
